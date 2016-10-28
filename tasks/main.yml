@@ -1,0 +1,24 @@
+---
+# This role configures a secondary network interface to be used primarily by aws-eni.
+
+
+
+- name: add new routing table
+  lineinfile: line="2 eth1_rt" dest=/etc/iproute2/rt_tables backup=yes
+  sudo: yes
+
+- name: configure ip table to fix assymetrical routing
+  command: ip route add default via {{ eni_gateway }} dev eth1 table eth1_rt
+  command: ip rule add from {{ eni_subnet }} lookup eth1_rt priority 1000
+  sudo: yes
+
+
+- name: copy eth1 config
+  template:
+    src=eth1.cfg.conf.j2
+    dest=/etc/network/interfaces.d/eth1.cfg
+    owner=root group=root mode=644
+
+  sudo: yes
+  notify: Restart networking
+

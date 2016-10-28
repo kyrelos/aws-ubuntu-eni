@@ -1,0 +1,5 @@
+eni_subnet: 192.168.1.0/24
+subnet_mask: 255.255.255.0
+eni_private_ip: 192.168.1.39
+eni_network_address: 192.168.1.0
+eni_gateway: 192.168.1.1

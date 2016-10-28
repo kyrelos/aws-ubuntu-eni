@@ -1,0 +1,9 @@
+---
+# Handlers for monit
+
+
+- name: Restart networking
+  service:
+    name=networking
+    state=restarted
+  sudo: yes

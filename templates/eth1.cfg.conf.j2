@@ -1,0 +1,11 @@
+# ------------------------------------------
+# Secondary network interface config for the eni
+# ------------------------------------------
+auto eth1
+iface eth1 inet static
+    address {{ private_ip }}
+    netmask {{ subnet_mask }}
+    network {{ network_address }}
+    up ip route add default via {{ gateway }} dev eth1 table eth1_rt
+    up ip rule add from {{ subnet }} lookup eth1_rt priority 1000
+
